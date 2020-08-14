@@ -27,7 +27,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Version: 1.0
+Version: 1.0.3
 Date: 2020-08-15
 Author: Craig H. Rowland  @CraigHRowland  @SandflySecurity
 */
@@ -39,7 +39,7 @@ import (
 )
 
 const (
-	constVersion = "1.0.2"
+	constVersion = "1.0.3"
 )
 
 
