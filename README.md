@@ -47,6 +47,7 @@ Found hidden PID: 15070 with name: reptile_shell
 
 ## Diamorphine style LKM stealth rootkit
 ```
+root@sandfly-dirty:~# ./sandfly-processdecloak
 sandfly-processdecloak Version 1.0
 
 Copyright (c) 2020 Sandfly Security - www.sandflysecurity.com
