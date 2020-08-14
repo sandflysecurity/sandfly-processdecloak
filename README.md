@@ -13,9 +13,9 @@ not-so-common loadable kernel module stealth rootkits and decloak them so they a
 
 # How Do I Use This?
 
-Usage of `sandfly-decloak`:
+Usage of `sandfly-processdecloak`:
 
-Simply build and run 'sandfly-processdecloak' on the command line. Hidden PIDs will be shown if found. 
+Simply build and run `sandfly-processdecloak` on the command line. Hidden PIDs will be shown if found. 
 
 # Examples
 
