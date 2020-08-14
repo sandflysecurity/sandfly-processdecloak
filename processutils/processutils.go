@@ -64,42 +64,14 @@ type PIDStatus struct {
 	PPID  int    `json:"ppid"`
 }
 
-// GetMaxPIDAllowed gets system /proc/sys/kernel/pid_max to see what maximum PID is so we don't waste time busting 2^22
-func GetMaxPIDAllowed() (maxPID int, err error) {
-
-	// PID max location /proc/sys/kernel/pid_max
-	f, err := os.Open(ConstPathMaxPID)
-	if err != nil {
-		return maxPID, fmt.Errorf("there was an error reading %s: %v", ConstPathMaxPID, err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		maxPID, err = strconv.Atoi(scanner.Text())
-		if err != nil {
-			return maxPID, fmt.Errorf("there was an error converting the max PID from %s to an integer: %v",
-				ConstPathMaxPID, err)
-		}
-		break
-	}
-	if err := scanner.Err(); err != nil {
-		return maxPID, fmt.Errorf("there was an error reading the max PID from %s: %v",
-			ConstPathMaxPID, err)
-	}
-
-	return maxPID, nil
-}
-
 // DecloakPIDs gets all the PIDS running on the system by bruteforcing all available PID values and seeing if hiding.
 func DecloakPIDs(getHidden bool) (PidList []int, err error) {
 
-	maxPID, err := GetMaxPIDAllowed()
 	if err != nil {
 		return PidList, err
 	}
 
-	for pid := 1; pid < maxPID; pid++ {
+	for pid := 1; pid < ConstMaxPID; pid++ {
 		pidHidden, err := IsPidHidden(pid, true)
 		if err != nil {
 			// err may just mean the PID attempt to read failed which is OK as we are brute forcing them all and

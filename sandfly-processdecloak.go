@@ -39,7 +39,7 @@ import (
 )
 
 const (
-	constVersion = "1.0"
+	constVersion = "1.0.1"
 )
 
 
