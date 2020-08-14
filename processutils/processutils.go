@@ -26,7 +26,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Version: 1.0
+Version: 1.0.2
 Date: 2020-08-15
 Author: Craig H. Rowland  @CraigHRowland  @SandflySecurity
 */
@@ -47,8 +47,6 @@ const (
 	ConstMinPID = 1
 	// ConstMaxPID maximum PID value allowed for process checks. 64bit linux is 2^22. This value is a limiter.
 	ConstMaxPID = 4194304
-	// ConstPathMaxPID is the path to the kernel PID limit.
-	ConstPathMaxPID = "/proc/sys/kernel/pid_max"
 	// ConstHiddenVerifyDelay is seconds to wait if we see a hidden PID to re-verify it really is hidden (anti-race)
 	ConstHiddenVerifyDelay = 1
 )
@@ -65,11 +63,7 @@ type PIDStatus struct {
 }
 
 // DecloakPIDs gets all the PIDS running on the system by bruteforcing all available PID values and seeing if hiding.
-func DecloakPIDs(getHidden bool) (PidList []int, err error) {
-
-	if err != nil {
-		return PidList, err
-	}
+func DecloakPIDs() (PidList []int, err error) {
 
 	for pid := 1; pid < ConstMaxPID; pid++ {
 		pidHidden, err := IsPidHidden(pid, true)
@@ -118,7 +112,7 @@ func IsPidHidden(pid int, raceVerify bool) (pidHidden bool, err error) {
 			// Now with this pid that matched all criteria, we'll see if we can stat the
 			// top directory for it. If not, then something is hiding it. We should be able to stat
 			// legitimate PIDs even if not showing under /proc due to being threads/children.
-			pidPath := path.Join("/proc", strconv.Itoa(int(pid)))
+			pidPath := path.Join("/proc", strconv.Itoa(pid))
 			_, err = os.Lstat(pidPath)
 			// An error means lstat failed and something is hidden. We already know the PID is there above
 			// because we could read the maps file. So why can't we stat it?

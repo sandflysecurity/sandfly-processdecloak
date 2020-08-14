@@ -39,7 +39,7 @@ import (
 )
 
 const (
-	constVersion = "1.0.1"
+	constVersion = "1.0.2"
 )
 
 
@@ -48,15 +48,16 @@ func main() {
 	fmt.Printf("Copyright (c) 2020 Sandfly Security - www.sandflysecurity.com\n\n")
 	fmt.Printf("Decloaking hidden Process IDs (PIDS) on Linux host.\n")
 
-	hiddenPIDs, err := processutils.DecloakPIDs(true)
+	hiddenPIDs, err := processutils.DecloakPIDs()
 	if err != nil {
-		fmt.Errorf("error analyzing PIDs: %#v\n", err)
+		log.Fatalf("error analyzing PIDs: %#v\n", err)
 	}
+
 	if len(hiddenPIDs) > 0 {
-		for x := range(hiddenPIDs) {
+		for x := range hiddenPIDs {
 			status, err := processutils.Status(hiddenPIDs[x])
 			if err != nil {
-				log.Fatal("error reporting status on hidden PID %d : %#v", hiddenPIDs[x], err)
+				log.Fatalf("error reporting status on hidden PID %d : %#v", hiddenPIDs[x], err)
 			}
 			fmt.Printf("Found hidden PID: %d with name: %s\n", hiddenPIDs[x], status.Name)
 		}
