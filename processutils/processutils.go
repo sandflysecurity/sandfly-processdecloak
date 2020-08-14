@@ -26,7 +26,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Version: 1.0.3
+Version: 1.0.4
 Date: 2020-08-15
 Author: Craig H. Rowland  @CraigHRowland  @SandflySecurity
 */
@@ -131,10 +131,9 @@ func IsPidHidden(pid int, raceVerify bool) (pidHidden bool, err error) {
 					return pidHidden, fmt.Errorf("there was an error reading the /proc directory to find hidden PIDS: %v", err)
 				}
 				for _, f := range files {
-					pidToCheck, err := strconv.Atoi(f.Name())
-					if err != nil || pidToCheck == 0 {
-						// We'll ignore entries in this dir that are not integers. We only want integers which are PIDS
-						// showing up under /proc. A 0 value means atoi couldn't decode which means non-integer as well.
+					pidToCheck, _ := strconv.Atoi(f.Name())
+					if pidToCheck == 0 {
+						// A 0 value is invalid and we'll ignore it.
 					} else if pid == pidToCheck {
 						pidHidden = false
 						break
