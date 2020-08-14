@@ -21,7 +21,7 @@ Simply build and run `sandfly-processdecloak` on the command line. Hidden PIDs w
 
 When run, the program will show all clean or PIDs that are suspicious:
 
-##Clean System
+## Clean System
 
 ```
 root@sandfly-clean:~# ./sandfly-processdecloak
@@ -32,7 +32,7 @@ Decloaking hidden Process IDs (PIDS) on Linux host.
 No hidden PIDs found.
 ```
 
-##Reptile style LKM stealth rootkit
+## Reptile style LKM stealth rootkit
 
 ```
 root@sandfly-dirty:~# ./sandfly-processdecloak 
