@@ -97,7 +97,7 @@ Or for generic 386:
 # False Positives
 
 It's possible to flag a legitimate PID that is not actually cloaked. You will need to manually investigate the
-/proc/PID directory to check if it is legitimate. Pleae report false positives to us if you find them. 
+/proc/PID directory to check if it is legitimate. Please report false positives to us if you find them. 
 
 # Agentless Linux Security
 
