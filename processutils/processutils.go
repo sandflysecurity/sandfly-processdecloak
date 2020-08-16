@@ -26,7 +26,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Version: 1.0.4
+Version: 1.0.5
 Date: 2020-08-15
 Author: Craig H. Rowland  @CraigHRowland  @SandflySecurity
 */
@@ -65,11 +65,10 @@ type PIDStatus struct {
 // DecloakPIDs gets all the PIDS running on the system by bruteforcing all available PID values and seeing if hiding.
 func DecloakPIDs() (PidList []int, err error) {
 
-	for pid := 1; pid < ConstMaxPID; pid++ {
+	for pid := ConstMinPID; pid < ConstMaxPID; pid++ {
 		pidHidden, err := IsPidHidden(pid, true)
 		if err != nil {
-			// err may just mean the PID attempt to read failed which is OK as we are brute forcing them all and
-			// it just may not be there.
+			return PidList, err
 		} else if pidHidden {
 			PidList = append(PidList, pid)
 		}
@@ -130,15 +129,12 @@ func IsPidHidden(pid int, raceVerify bool) (pidHidden bool, err error) {
 				if err != nil {
 					return pidHidden, fmt.Errorf("there was an error reading the /proc directory to find hidden PIDS: %v", err)
 				}
+				pidHidden = true
 				for _, f := range files {
 					pidToCheck, _ := strconv.Atoi(f.Name())
-					if pidToCheck == 0 {
-						// A 0 value is invalid and we'll ignore it.
-					} else if pid == pidToCheck {
+					if pid == pidToCheck {
 						pidHidden = false
 						break
-					} else {
-						pidHidden = true
 					}
 				}
 			}
