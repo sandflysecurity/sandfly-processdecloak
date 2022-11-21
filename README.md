@@ -124,8 +124,8 @@ us if you find them.
 ## Agentless Linux Security
 
 Sandfly Security produces an agentless endpoint detection and incident response platform (EDR) for
-Linux. Automated entropy checks are just one of thousands of things we search for to find intruders
-without loading any software on your Linux endpoints.
+Linux. Automated hidden process checks are just one of thousands of things we search for to find
+intruders without loading any software on your Linux endpoints.
 
 Get a free license and learn more below:
 
