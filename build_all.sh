@@ -12,5 +12,13 @@
 # https://www.sandflysecurity.com
 # @SandflySecurity
 
-echo "Building for Linux/386"
-env GOOS=linux GOARCH=386 go build -o sandfly-processdecloak.386 -ldflags="-s -w"
+echo "Building for all Linux OS archictectures."
+./build_linux_386.sh
+./build_linux_amd64.sh
+./build_linux_arm.sh
+./build_linux_arm5.sh
+./build_linux_arm6.sh
+./build_linux_arm7.sh
+./build_linux_arm64.sh
+./build_linux_mips.sh
+./build_linux_mips64.sh

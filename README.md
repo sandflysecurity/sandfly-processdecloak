@@ -77,22 +77,31 @@ On the system architecture you want to compile for, copy the sources under your 
 There are a some basic build scripts that build for various platforms. You can use these to build or modify to suit.
 For Incident Responders, it might be useful to keep pre-compiled binaries ready to go on your investigation box.
 
-`build_linux.sh` - Build for AMD/Intel/64bit Linux
+`build.sh` - Generic build for whatever architecture you are on when run.
 
-`build_linux_386.sh` - Build for 386/32bit Linux
+`build_all.sh` - Builds all binaries for AMD, Intel, MIPS and Arm Linux architectures. 
 
-`build_generic.sh` - Builds a binary for whatever OS you're running on when you run it. 
+`build_linux_adm64.sh` - Build for AMD64/Intel 64 bit architecture.
+`build_linux_386.sh` - Build for 386/32 bit archtecture.
+`build_linux_arm.sh` - Build for generic Arm archtecture.
+`build_linux_arm5.sh` - Build for Armv5 archtecture.
+`build_linux_arm6.sh` - Build for Armv6 archtecture.
+`build_linux_arm7.sh` - Build for Armv7 archtecture.
+`build_linux_arm64.sh` - Build for Arm 64 bit archtecture.
+`build_linux_mips.sh` - Build for MIPS archtecture.
+`build_linux_mips64.sh` - Build for MIPS 64 bit archtecture.
 
 ## Linux AMD/Intel64 Command Line Build
 
 To build for basic Linux, go into the files under the Golang src directory and build:
 
-`env GOOS=linux GOARCH=amd64 go build -o sandfly-processdecloak -ldflags="-s -w" sandfly-processdecloak
-`
+`env GOOS=linux GOARCH=amd64 go build -o sandfly-processdecloak -ldflags="-s -w" 
 
 Or for generic 386:
 
-`env GOOS=linux GOARCH=386 go build -o sandfly-processdecloak -ldflags="-s -w" sandfly-processdecloak`
+`env GOOS=linux GOARCH=386 go build -o sandfly-processdecloak -ldflags="-s -w"`
+
+You can do the same for any supported Golang architecture on Linux. 
 
 # False Positives
 
@@ -101,18 +110,12 @@ It's possible to flag a legitimate PID that is not actually cloaked. You will ne
 
 # Agentless Linux Security
 
-Sandfly Security produces an agentless intrusion detection and incident response platform for Linux.  Automated 
-cloaked process checks are just one of the nearly 1000 security modules we use to find Linux malware. Our product
-does not require loading any agents on your endpoint and deploys in minutes. Please contact us for a trial of the 
-full product. 
+Sandfly Security produces an agentless endpoint detection and incident response platform (EDR) for Linux. 
+Automated entropy checks are just one of thousands of things we search for to find intruders without loading 
+any software on your Linux endpoints.
 
-Learn more below:
+Get a free license and learn more below:
 
 https://www.sandflysecurity.com
-
 @SandflySecurity
-
-@CraigHRowland
-
-
 

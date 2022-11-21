@@ -5,12 +5,16 @@ package main
 This utility will decloak Process IDs (PIDS) being hidden by common and not-so-common Loadable Kernel Module
 stealth rootkits on Linux.
 
-Sandfly Security produces an agentless intrusion detection and incident response platform for Linux. You can
-find out more about how it works at: https://www.sandflysecurity.com
+Sandfly produces an agentless Linux endpoint detection and incident response platform (EDR). Sandfly hunts for threats
+against your Linux systems without loading any agents on your endpoints and works against most distributions and architectures
+
+Please see our website for more information or a free trial:
+
+https://www.sandflysecurity.com
 
 MIT License
 
-Copyright (c) 2020 Sandfly Security Ltd.
+Copyright (c) 2020-2022 Sandfly Security Ltd.
 https://www.sandflysecurity.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -27,25 +31,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Version: 1.0.5
-Date: 2020-08-15
-Author: Craig H. Rowland  @CraigHRowland  @SandflySecurity
+Version: 1.0.6
+Date: 2022-11-15
+Author: Sandfly Security @SandflySecurity
 */
 
 import (
 	"fmt"
 	"log"
-	"sandfly-processdecloak/processutils"
+
+	"github.com/sandflysecurity/sandfly-processdecloak/processutils"
 )
 
 const (
-	constVersion = "1.0.5"
+	constVersion = "1.0.6"
 )
-
 
 func main() {
 	fmt.Printf("sandfly-processdecloak Version %s\n", constVersion)
-	fmt.Printf("Copyright (c) 2020 Sandfly Security - www.sandflysecurity.com\n\n")
+	fmt.Printf("Copyright (c) 2020-2022 Sandfly Security\n")
+	fmt.Printf("Agentless Security for Linux  - www.sandflysecurity.com\n\n")
 	fmt.Printf("Decloaking hidden Process IDs (PIDS) on Linux host.\n")
 
 	hiddenPIDs, err := processutils.DecloakPIDs()
@@ -65,4 +70,3 @@ func main() {
 		fmt.Printf("No hidden PIDs found.\n")
 	}
 }
-

@@ -12,5 +12,5 @@
 # https://www.sandflysecurity.com
 # @SandflySecurity
 
-echo "Building for Linux/386"
-env GOOS=linux GOARCH=386 go build -o sandfly-processdecloak.386 -ldflags="-s -w"
+echo "Building for Linux Arm64 Generic"
+env GOOS=linux GOARCH=arm64 go build -o sandfly-processdecloak.arm -ldflags="-s -w"

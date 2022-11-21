@@ -1,5 +1,6 @@
 // Sandfly processdecloak process utilities.
 package processutils
+
 /*
 This utility will decloak Process IDs (PIDS) being hidden by common and not-so-common Loadable Kernel Module
 stealth rootkits on Linux.
@@ -26,9 +27,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Version: 1.0.5
-Date: 2020-08-15
-Author: Craig H. Rowland  @CraigHRowland  @SandflySecurity
+Version: 1.0.6
+Date: 2022-11-15
+Author: Sandfly Security @SandflySecurity
 */
 
 import (
