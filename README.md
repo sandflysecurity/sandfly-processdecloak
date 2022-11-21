@@ -1,29 +1,31 @@
 # What is sandfly-processdecloak?
 
-`sandfly-processdecloak` is a utility to quickly scan for Linux Process IDs (PIDs) that are hidden by common and 
-not-so-common loadable kernel module stealth rootkits and decloak them so they are visible.
+`sandfly-processdecloak` is a utility to quickly scan for Linux Process IDs (PIDs) that
+are hidden by common and not-so-common loadable kernel module stealth rootkits and decloak them so
+they are visible.
 
-# Features
+## Features
 
 * Written in Golang and is portable across multiple architectures with no modifications.
 * Standalone binary requires no dependencies and can be used instantly without loading any libraries.
 * Not affected by ld_preload style rootkits or tampered shared libraries on suspect hosts.
-* Works against LKM rootkits such as Diamorphine, Reptile and variants. 
-* Very lightweight and will not hook into kernel or cause system instability. 
+* Works against LKM rootkits such as Diamorphine, Reptile and variants.
+* Very lightweight and will not hook into kernel or cause system instability.
 
-# How Do I Use This?
+## How Do I Use This?
 
 Usage of `sandfly-processdecloak`:
 
-Simply build and run `sandfly-processdecloak` on the command line. Hidden PIDs will be shown if found. 
+Simply build and run `sandfly-processdecloak` on the command line. Hidden PIDs will be shown if
+found.
 
-# Examples
+## Examples
 
 When run, the program will show all clean or PIDs that are suspicious:
 
 ## Clean System
 
-```
+```bash
 root@sandfly-clean:~# ./sandfly-processdecloak
 sandfly-processdecloak Version 1.0
 Copyright (c) 2020 Sandfly Security - www.sandflysecurity.com
@@ -34,7 +36,7 @@ No hidden PIDs found.
 
 ## Reptile style LKM stealth rootkit
 
-```
+```bash
 root@sandfly-dirty:~# ./sandfly-processdecloak 
 sandfly-processdecloak Version 1.0
 
@@ -46,7 +48,8 @@ Found hidden PID: 15070 with name: reptile_shell
 ```
 
 ## Diamorphine style LKM stealth rootkit
-```
+
+```bash
 root@sandfly-dirty:~# ./sandfly-processdecloak
 sandfly-processdecloak Version 1.0
 
@@ -56,7 +59,7 @@ Decloaking hidden Process IDs (PIDS) on Linux host.
 Found hidden PID: 7171 with name: diamorphine_hid
 ```
 
-# Build
+## Build
 
 * Install latest version of golang (www.golang.org)
 * Use the following command:
@@ -74,8 +77,9 @@ On the system architecture you want to compile for, copy the sources under your 
 
 ## Build Scripts
 
-There are a some basic build scripts that build for various platforms. You can use these to build or modify to suit.
-For Incident Responders, it might be useful to keep pre-compiled binaries ready to go on your investigation box.
+There are a some basic build scripts that build for various platforms. You can use these to build or
+modify to suit. For Incident Responders, it might be useful to keep pre-compiled binaries ready to
+go on your investigation box.
 
 `build.sh` - Generic build for whatever architecture you are on when run.
 
@@ -103,7 +107,7 @@ For Incident Responders, it might be useful to keep pre-compiled binaries ready 
 
 To build for basic Linux, go into the files under the Golang src directory and build:
 
-`env GOOS=linux GOARCH=amd64 go build -o sandfly-processdecloak -ldflags="-s -w" 
+`env GOOS=linux GOARCH=amd64 go build -o sandfly-processdecloak -ldflags="-s -w"`
 
 Or for generic 386:
 
@@ -111,19 +115,20 @@ Or for generic 386:
 
 You can do the same for any supported Golang architecture on Linux. 
 
-# False Positives
+## False Positives
 
-It's possible to flag a legitimate PID that is not actually cloaked. You will need to manually investigate the
-/proc/PID directory to check if it is legitimate. Please report false positives to us if you find them. 
+It's possible to flag a legitimate PID that is not actually cloaked. You will need to manually
+investigate the /proc/PID directory to check if it is legitimate. Please report false positives to
+us if you find them.
 
-# Agentless Linux Security
+## Agentless Linux Security
 
-Sandfly Security produces an agentless endpoint detection and incident response platform (EDR) for Linux. 
-Automated entropy checks are just one of thousands of things we search for to find intruders without loading 
-any software on your Linux endpoints.
+Sandfly Security produces an agentless endpoint detection and incident response platform (EDR) for
+Linux. Automated entropy checks are just one of thousands of things we search for to find intruders
+without loading any software on your Linux endpoints.
 
 Get a free license and learn more below:
 
-https://www.sandflysecurity.com
-@SandflySecurity
+<https://www.sandflysecurity.com>
 
+@SandflySecurity
