@@ -70,7 +70,7 @@ Found hidden PID: 7171 with name: diamorphine_hid
 
 On the system architecture you want to compile for, copy the sources under your Golang src directory and run:
 
-`go build sandfly-processdecloak.go`
+`go build sandfly-processdecloak`
 
 ## Build Scripts
 
@@ -79,16 +79,24 @@ For Incident Responders, it might be useful to keep pre-compiled binaries ready 
 
 `build.sh` - Generic build for whatever architecture you are on when run.
 
-`build_all.sh` - Builds all binaries for AMD, Intel, MIPS and Arm Linux architectures. 
+`build_all.sh` - Builds all binaries for AMD, Intel, MIPS and Arm Linux architectures.
 
 `build_linux_adm64.sh` - Build for AMD64/Intel 64 bit architecture.
+
 `build_linux_386.sh` - Build for 386/32 bit archtecture.
+
 `build_linux_arm.sh` - Build for generic Arm archtecture.
+
 `build_linux_arm5.sh` - Build for Armv5 archtecture.
+
 `build_linux_arm6.sh` - Build for Armv6 archtecture.
+
 `build_linux_arm7.sh` - Build for Armv7 archtecture.
+
 `build_linux_arm64.sh` - Build for Arm 64 bit archtecture.
+
 `build_linux_mips.sh` - Build for MIPS archtecture.
+
 `build_linux_mips64.sh` - Build for MIPS 64 bit archtecture.
 
 ## Linux AMD/Intel64 Command Line Build
