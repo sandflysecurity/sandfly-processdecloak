@@ -35,6 +35,7 @@ Author: Sandfly Security @SandflySecurity
 import (
 	"bufio"
 	"fmt"
+	"io/fs"
 	"os"
 	"path"
 	"strconv"
@@ -125,20 +126,19 @@ func IsPidHidden(pid int, raceVerify bool) (pidHidden bool, err error) {
 			//
 			// Only do this check if the above check didn't return hidden already.
 			if pidHidden == false {
-				files, err := os.ReadDir("/proc")
+				entries, err := os.ReadDir("/proc")
 				if err != nil {
 					return pidHidden, fmt.Errorf("there was an error reading the /proc directory to find hidden PIDS: %v", err)
 				}
-				/*
-					infos := make([]fs.FileInfo, 0, len(entries))
-					for _, entry := range entries {
-						info, err := entry.Info()
-						if err != nil {
-							return
-						}
-						infos = append(infos, info)
+
+				files := make([]fs.FileInfo, 0, len(entries))
+				for _, entry := range entries {
+					info, err := entry.Info()
+					if err != nil {
+						return
 					}
-				*/
+					files = append(files, info)
+				}
 
 				/*
 					files, err := ioutil.ReadDir("/proc")
@@ -146,6 +146,7 @@ func IsPidHidden(pid int, raceVerify bool) (pidHidden bool, err error) {
 						return pidHidden, fmt.Errorf("there was an error reading the /proc directory to find hidden PIDS: %v", err)
 					}
 				*/
+
 				pidHidden = true
 				for _, f := range files {
 					pidToCheck, _ := strconv.Atoi(f.Name())
