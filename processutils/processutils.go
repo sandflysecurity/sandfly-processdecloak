@@ -40,6 +40,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -65,14 +66,29 @@ type PIDStatus struct {
 
 // DecloakPIDs gets all the PIDS running on the system by bruteforcing all available PID values and seeing if hiding.
 func DecloakPIDs() (PidList []int, err error) {
+	pidChannel := make(chan int)
+	var wg sync.WaitGroup
 
 	for pid := ConstMinPID; pid < ConstMaxPID; pid++ {
-		pidHidden, err := IsPidHidden(pid, true)
-		if err != nil {
-			return PidList, err
-		} else if pidHidden {
-			PidList = append(PidList, pid)
-		}
+		wg.Add(1)
+		go func(pid int) {
+			defer wg.Done()
+			pidHidden, err := IsPidHidden(pid, true)
+			if err != nil {
+				return
+			} else if pidHidden {
+				pidChannel <- pid
+			}
+		}(pid)
+	}
+
+	go func() {
+		wg.Wait()
+		close(pidChannel)
+	}()
+
+	for pid := range pidChannel {
+		PidList = append(PidList, pid)
 	}
 
 	return PidList, nil
