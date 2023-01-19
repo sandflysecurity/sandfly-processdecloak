@@ -58,15 +58,16 @@ func main() {
 		log.Fatalf("error analyzing PIDs: %#v\n", err)
 	}
 
-	if len(hiddenPIDs) > 0 {
-		for x := range hiddenPIDs {
-			status, err := processutils.Status(hiddenPIDs[x])
-			if err != nil {
-				log.Fatalf("error reporting status on hidden PID %d : %#v", hiddenPIDs[x], err)
-			}
-			fmt.Printf("Found hidden PID: %d with name: %s\n", hiddenPIDs[x], status.Name)
-		}
-	} else {
+	if len(hiddenPIDs) == 0 {
 		fmt.Printf("No hidden PIDs found.\n")
+	} else {
+		for _, pid := range hiddenPIDs {
+			status, err := processutils.Status(pid)
+			if err != nil {
+				log.Fatalf("error reporting status on hidden PID %d : %#v", pid, err)
+			}
+			fmt.Printf("Found hidden PID: %d with name: %s\n", pid, status.Name)
+		}
 	}
+
 }
