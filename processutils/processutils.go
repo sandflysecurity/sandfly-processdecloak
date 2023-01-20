@@ -35,11 +35,12 @@ Author: Sandfly Security @SandflySecurity
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
+	"io/fs"
 	"os"
 	"path"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -65,14 +66,29 @@ type PIDStatus struct {
 
 // DecloakPIDs gets all the PIDS running on the system by bruteforcing all available PID values and seeing if hiding.
 func DecloakPIDs() (PidList []int, err error) {
+	pidChannel := make(chan int)
+	var wg sync.WaitGroup
 
 	for pid := ConstMinPID; pid < ConstMaxPID; pid++ {
-		pidHidden, err := IsPidHidden(pid, true)
-		if err != nil {
-			return PidList, err
-		} else if pidHidden {
-			PidList = append(PidList, pid)
-		}
+		wg.Add(1)
+		go func(pid int) {
+			defer wg.Done()
+			pidHidden, err := IsPidHidden(pid, true)
+			if err != nil {
+				return
+			} else if pidHidden {
+				pidChannel <- pid
+			}
+		}(pid)
+	}
+
+	go func() {
+		wg.Wait()
+		close(pidChannel)
+	}()
+
+	for pid := range pidChannel {
+		PidList = append(PidList, pid)
 	}
 
 	return PidList, nil
@@ -126,10 +142,27 @@ func IsPidHidden(pid int, raceVerify bool) (pidHidden bool, err error) {
 			//
 			// Only do this check if the above check didn't return hidden already.
 			if pidHidden == false {
-				files, err := ioutil.ReadDir("/proc")
+				entries, err := os.ReadDir("/proc")
 				if err != nil {
 					return pidHidden, fmt.Errorf("there was an error reading the /proc directory to find hidden PIDS: %v", err)
 				}
+
+				files := make([]fs.FileInfo, 0, len(entries))
+				for _, entry := range entries {
+					info, err := entry.Info()
+					if err != nil {
+						return
+					}
+					files = append(files, info)
+				}
+
+				/*
+					files, err := ioutil.ReadDir("/proc")
+					if err != nil {
+						return pidHidden, fmt.Errorf("there was an error reading the /proc directory to find hidden PIDS: %v", err)
+					}
+				*/
+
 				pidHidden = true
 				for _, f := range files {
 					pidToCheck, _ := strconv.Atoi(f.Name())
